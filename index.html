@@ -24,11 +24,6 @@
             <div class="clr"></div>
         </div>
         <div id="note"></div>
-        <div id="cite">
-            This is a simulation of 1,000 people's average day. It's based on 2014 data from the <a
-                href="http://www.bls.gov/tus/">American Time Use Survey</a>, made way more accessible by the <a
-                href="https://www.atusdata.org/">ATUS Extract Builder</a>.
-        </div>
     </div>
     <div id="chart"></div>
     <div class="clr"></div>
@@ -36,7 +31,13 @@
 <script src="./d3-3-5-5.min.js"></script>
 <script>
     var THEME = "black";
+    document.body.className = "black"
+    fetch("./themes.json").then(response => response.json())
+        .then(data => {
+            THEME = data[THEME]
+        });
     var USER_SPEED = "slow";
+    var TIME;
 
     var width = 780,
         height = 800,
@@ -54,66 +55,32 @@
         {"index": "0", "short": "شمال", "desc": "Personal Care"},
         {"index": "4", "short": "وسط", "desc": "وسط"},
     ];
-
+    var act_counts;
+    var nodes;
+    var force;
+    var circle;
+    var label;
+    var label1;
 
     var speeds = {"slow": 2000, "medium": 1000, "fast": 500};
 
-
-    // var time_notes = [
-    //     {
-    //         "start_minute": 1,
-    //         "stop_minute": 40,
-    //         "note": "The simulation kicks in, based on data from the American Time Use Survey."
-    //     },
-    //     {
-    //         "start_minute": 70,
-    //         "stop_minute": 120,
-    //         "note": "Most people are still sleeping this early in the morning, but some are already at work or preparing for the day."
-    //     },
-    //     {
-    //         "start_minute": 180,
-    //         "stop_minute": 300,
-    //         "note": "It's wake up time for most. Time to start the day with morning rituals, breakfast and a wonderful commute."
-    //     },
-    //     {
-    //         "start_minute": 360,
-    //         "stop_minute": 440,
-    //         "note": "The day is in full swing with work or housework. Stores and services are open so people can run errands, and they take various forms of transportation to get there."
-    //     },
-    //     {
-    //         "start_minute": 480,
-    //         "stop_minute": 540,
-    //         "note": "Lunch hour. Many go eat, but there's still activity throughout. You see a small shift at the end of the hour."
-    //     },
-    //     {
-    //         "start_minute": 660,
-    //         "stop_minute": 720,
-    //         "note": "Coffee break? Again, at the top of the hour, you see a shift in activity."
-    //     },
-    //     {
-    //         "start_minute": 780,
-    //         "stop_minute": 830,
-    //         "note": "With the work day done, it's time to commute home and fix dinner or go out for a while."
-    //     },
-    //     {"start_minute": 870, "stop_minute": 890, "note": "Dinner time!"},
-    //     {
-    //         "start_minute": 930,
-    //         "stop_minute": 1010,
-    //         "note": "Dinner's done. Time for relaxation, TV, games, hobbies and socializing."
-    //     },
-    //     {
-    //         "start_minute": 1080,
-    //         "stop_minute": 1140,
-    //         "note": "Winding down for the day. From leisure time, people shift to personal care and sleep."
-    //     },
-    //     {
-    //         "start_minute": 1210,
-    //         "stop_minute": 1300,
-    //         "note": "Goodnight. More than 80% of people are asleep and it peaks at 96% around 3:00am."
-    //     },
-    // ];
     var notes_index = 0;
 
+setTimeout(resetData, 100000)
+    function resetData() {
+        clearInterval(TIME)
+        timer()
+        USER_SPEED = "slow";
+        sched_objs = [],
+            curr_minute = 0;
+        d3.tsv("./data/Alien_Female_20_form.tsv", function (error, data) {
+
+            svg.selectAll("circle")
+                .remove();
+            // .call(force.drag);
+
+        });
+    }
 
     // Activity to put in center of circle arrangement
     var center_act = "وسط",
@@ -158,10 +125,10 @@
         });
 
         // Used for percentages by minute
-        var act_counts = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0};
+        act_counts = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0};
 
         // A node for each person's schedule
-        var nodes = sched_objs.map(function (o, i) {
+        nodes = sched_objs.map(function (o, i) {
 
             var act = o[0].act;
             act_counts[act] += 1;
@@ -169,7 +136,7 @@
             var init_y = foci[act].y + Math.random();
             return {
                 act: act,
-                radius: 3,
+                radius: 4,
                 x: init_x,
                 y: init_y,
                 color: color(act),
@@ -179,7 +146,7 @@
             }
         });
 
-        var force = d3.layout.force()
+         force = d3.layout.force()
             .nodes(nodes)
             .size([width, height])
             // .links([])
@@ -189,7 +156,7 @@
             .on("tick", tick)
             .start();
 
-        var circle = svg.selectAll("circle")
+         circle = svg.selectAll("circle")
             .data(nodes)
             .enter().append("circle")
             .attr("r", function (d) {
@@ -201,10 +168,35 @@
         // .call(force.drag);
 
         // Activity labels
-        var label = svg.selectAll("text")
+        label = svg.selectAll("text")
             .data(act_codes)
             .enter().append("text")
             .attr("class", "actlabel")
+            .attr("direction", "rtl")
+            .attr("x", function (d, i) {
+                if (d.desc == center_act) {
+                    return center_pt.x;
+                } else {
+                    var theta = 2 * Math.PI / (act_codes.length - 1);
+                    return 340 * Math.cos(i * theta) + 380;
+                }
+
+            })
+            .attr("y", function (d, i) {
+                if (d.desc == center_act) {
+                    return center_pt.y;
+                } else {
+                    var theta = 2 * Math.PI / (act_codes.length - 1);
+                    return 340 * Math.sin(i * theta) + 365;
+                }
+
+            });
+
+        // Activity labels
+        label1 = svg.selectAll("actlabel1")
+            .data(act_codes)
+            .enter().append("text")
+            .attr("class", "actlabel1")
             .attr("direction", "rtl")
             .attr("x", function (d, i) {
                 if (d.desc == center_act) {
@@ -235,17 +227,18 @@
             .text(function (d) {
                 return d.short;
             });
-        // label.append("tspan")
-        // 	.attr("dy", "1.3em")
-        //     .attr("direction", "rtl")
-        // 	.attr("x", function() { return d3.select(this.parentNode).attr("x"); })
-        // 	.attr("text-anchor", "middle")
-        // 	.attr("class", "actpct")
-        // 	.text(function(d) {
-        // 		return act_counts[d.index] + "%";
-        // 	});
+        label1.append("tspan")
+        	.attr("dy", "1.3em")
+            .attr("direction", "rtl")
+        	.attr("x", function() { return d3.select(this.parentNode).attr("x"); })
+        	.attr("text-anchor", "middle")
+        	.attr("class", "actpct1")
+        	.text(function(d) {
+        		return readablePercent(act_counts[d.index]);
+        	});
 
 
+    }); // @end d3.tsv
         // Update nodes based on activity and duration
         function timer() {
             d3.range(nodes.length).map(function (i) {
@@ -282,7 +275,7 @@
             curr_minute += 60;
 
             // Update percentages
-            label.selectAll("tspan.actpct")
+            label1.selectAll("tspan.actpct1")
                 .text(function (d) {
                     return readablePercent(act_counts[d.index]);
                 });
@@ -318,10 +311,10 @@
             // }
             //
 
-            setTimeout(timer, speeds[USER_SPEED]);
+            TIME = setTimeout(timer, speeds[USER_SPEED]);
         }
 
-        setTimeout(timer, speeds[USER_SPEED]);
+        TIME = setTimeout(timer, speeds[USER_SPEED]);
 
 
         function tick(e) {
@@ -405,22 +398,21 @@
 
                 USER_SPEED = d3.select(this).attr("data-val");
             });
-    }); // @end d3.tsv
 
 
     function color(activity) {
 
         var colorByActivity = {
-            "0": "#e0d400",
-            "1": "#1c8af9",
-            "2": "#51BC05",
-            "3": "#FF7F00",
-            "4": "#DB32A4",
-            "5": "#00CDF8",
-            "6": "#E63B60",
-            "7": "#8E5649",
-            "8": "#68c99e",
-            "9": "#a477c8",
+            "0": THEME?.palette ? THEME?.palette[5] : "#e0d400",
+            "1": THEME?.palette ? THEME?.palette[4] : "#1c8af9",
+            "2": THEME?.palette ? THEME?.palette[3] : "#51BC05",
+            "3": THEME?.palette ? THEME?.palette[2] : "#FF7F00",
+            "4": THEME?.palette ? THEME?.palette[1] : "#DB32A4",
+            "5": THEME?.palette ? THEME?.palette[0] : "#00CDF8",
+            "6": THEME?.palette ? THEME?.palette[0] : "#E63B60",
+            "7": THEME?.palette ? THEME?.palette[0] : "#8E5649",
+            "8": THEME?.palette ? THEME?.palette[0] : "#68c99e",
+            "9": THEME?.palette ? THEME?.palette[0] : "#a477c8",
             "10": "#5C76EC",
             "11": "#E773C3",
             "12": "#799fd2",

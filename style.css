@@ -1,3 +1,11 @@
+.black{
+    --background: #212529;
+    --color: #fff;
+}
+.blue{}
+.light{}
+
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
@@ -11,9 +19,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     display: block
 }
 
+html, body{
+    height: 100%;
+}
+
 body {
     line-height: 1;
     direction: rtl;
+    background: var(--background);
+    color: var(--color);
 }
 
 ol, ul {
@@ -37,26 +51,32 @@ table {
 #main-wrapper {
     font-family: inconsolata, Monaco, lucida console, Consolas, courier new;
     font-size: 14px;
-    width: 1090px
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 #sidebar {
-    width: 259px;
-    float: left;
-    margin-right: 30px;
-    padding-right: 20px;
-    border-right: 1px solid #ccc;
-    height: 730px
+    width: 260px;
+    margin: 30px;
+    padding: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    height: calc(100% - 100px);
+    padding-left: 40px;
 }
 
 #current_time {
     font-size: 70px;
-    color: #666;
+    color: var(--color);
     text-align: center
 }
 
 #chart {
-    float: left
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #speed {
@@ -131,6 +151,6 @@ a:hover {
     clear: both
 }
 
-/*body{*/
-/*    background: #212529;*/
-/*}*/
+.actlabel, .actlabel1{
+    fill: var(--color);
+}

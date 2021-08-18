@@ -1,0 +1,17 @@
+{
+  "black": {
+    "palette": [
+      "#2f5fc0",
+      "#469bba",
+      "#46ba71",
+      "#8bba46",
+      "#baa446",
+      "#ba5a46",
+      "#8e2f2f",
+      "#8e2f78",
+      "#5e2f8e"
+    ],
+    "background": "#212529",
+    "color": "#fff"
+  }
+}
