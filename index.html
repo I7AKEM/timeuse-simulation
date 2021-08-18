@@ -36,6 +36,7 @@
 <script src="./d3-3-5-5.min.js"></script>
 <script>
     var USER_SPEED = "slow";
+    var USER_SPEED = "slow";
 
     var width = 780,
         height = 800,
@@ -47,19 +48,15 @@
         curr_minute = 0;
 
     var act_codes = [
-        {"index": "0", "short": "شرق", "desc": "Sleeping"},
-        {"index": "1", "short": "جنوب شرق", "desc": "Personal Care"},
-        {"index": "2", "short": "جنوب", "desc": "Eating and Drinking"},
-        {"index": "3", "short": "جنوب غرب", "desc": "Education"},
-        {"index": "4", "short": "غرب", "desc": "Work and Work-Related Activities"},
-        {"index": "5", "short": "شمال غرب", "desc": "Household Activities"},
-        {"index": "6", "short": "شمال", "desc": "Caring for and Helping Household Members"},
-        {"index": "7", "short": "شمال شرق", "desc": "Caring for and Helping Non-Household Members"},
-        {"index": "8", "short": "وسط", "desc": "وسط"},
+        {"index": "1", "short": "شرق", "desc": "Sleeping"},
+        {"index": "2", "short": "جنوب", "desc": "Education"},
+        {"index": "3", "short": "غرب", "desc": "Eating and Drinking"},
+        {"index": "0", "short": "شمال", "desc": "Personal Care"},
+        {"index": "4", "short": "وسط", "desc": "وسط"},
     ];
 
 
-    var speeds = {"slow": 1000, "medium": 200, "fast": 50};
+    var speeds = {"slow": 2000, "medium": 1000, "fast": 500};
 
 
     // var time_notes = [
@@ -132,7 +129,6 @@
             var theta = 2 * Math.PI / (act_codes.length - 1);
             foci[code.index] = {x: 250 * Math.cos(i * theta) + 380, y: 250 * Math.sin(i * theta) + 365};
         }
-        console.log(foci)
     });
 
 
@@ -145,15 +141,15 @@
 
 
     // Load data and let's do it.
-    d3.tsv("./days-simulated-v2.tsv", function (error, data) {
+    d3.tsv("./data/Alien_Male_40_form.tsv", function (error, data) {
+
         data.forEach(function (d) {
-            console.log(d.day.split(","))
             var day_array = d.day.split(",");
             var activities = [];
             for (var i = 0; i < day_array.length; i++) {
                 // Duration
                 if (i % 2 == 1) {
-                    if (day_array[i - 1] < 8) {
+                    if (day_array[i - 1] < 9) {
                         activities.push({'act': day_array[i - 1], 'duration': +day_array[i]});
                     }
                 }
@@ -166,6 +162,7 @@
 
         // A node for each person's schedule
         var nodes = sched_objs.map(function (o, i) {
+
             var act = o[0].act;
             act_counts[act] += 1;
             var init_x = foci[act].x + Math.random();
@@ -282,7 +279,7 @@
             });
 
             force.resume();
-            curr_minute += 1;
+            curr_minute += 60;
 
             // Update percentages
             label.selectAll("tspan.actpct")
@@ -328,6 +325,7 @@
 
 
         function tick(e) {
+            // console.log(e)
             var k = 0.04 * e.alpha;
 
             // Push nodes toward their designated focus.
