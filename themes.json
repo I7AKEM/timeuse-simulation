@@ -13,5 +13,34 @@
     ],
     "background": "#212529",
     "color": "#fff"
+  },
+  "blue": {
+    "palette": [
+      "#2e69af",
+      "#33a1b1",
+      "#3cb36e",
+      "#98b132",
+      "#b38732",
+      "#b35435",
+      "#b32f2f",
+      "#b32f94",
+      "#652fb3"
+    ],
+    "background": "#061D3C",
+    "color": "#fff"
+  },
+  "light": {
+    "palette": [
+      "#5179bd",
+      "#3ebddc",
+      "#6cbd68",
+      "#e7ce30",
+      "#e58449",
+      "#bc5353",
+      "#77299a",
+      "#4a2888"
+    ],
+    "background": "#fff",
+    "color": "#000"
   }
 }

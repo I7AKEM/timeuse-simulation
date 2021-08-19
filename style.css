@@ -1,10 +1,56 @@
-.black{
-    --background: #212529;
-    --color: #fff;
-}
-.blue{}
-.light{}
+@import "./fonts/tajawal/Tajawal-font.css";
+@import "./slider.css";
 
+.black{
+    --background: #111315;
+    --color: #fff;
+    --male: 47, 95, 192;
+    --female: 142, 47, 120;
+    --saudi: 70, 186, 113;
+    --non-saudi: 186, 164, 70;
+}
+.blue{
+    --background: #061D3C;
+    --color: #fff;
+    --male: 46, 105, 175;
+    --female: 179, 47, 148;
+    --saudi: 60, 179, 110;
+    --non-saudi: 179, 135, 50;
+}
+.light{
+    --background: #fff;
+    --color: #000;
+    --male: 81, 121, 189;
+    --female: 119, 41, 154;
+    --saudi: 108, 189, 104;
+    --non-saudi: 231, 206, 48;
+}
+
+
+.light #sidebar {
+    border-color: rgba(0,0,0,0.1)
+}
+
+.light #speed .togglebutton {
+    border-color: rgba(0,0,0,0.2);
+}
+
+
+.light .chart-filters .icon {
+    background: rgba(0,0,0, 0.1)
+}
+
+.light .chart-filters .icon svg, .light .chart-filters .icon path{
+    fill: rgba(0,0,0, 0.5)
+}
+
+.light #current_time:before {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.light #speed .togglebutton.current {
+    background: rgba(0,0,0,0.1);
+}
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
@@ -12,7 +58,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     border: 0;
     font-size: 100%;
     font: inherit;
-    vertical-align: baseline
+    vertical-align: baseline;
+    font-family: "Tajawal", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -64,12 +113,29 @@ table {
     border-left: 1px solid rgba(255, 255, 255, 0.18);
     height: calc(100% - 100px);
     padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #current_time {
-    font-size: 70px;
     color: var(--color);
-    text-align: center
+    text-align: center;
+    padding: 0.25em;
+    font-size: 50px;
+    position: relative;
+}
+
+#current_time:before {
+   content: "";
+    position: absolute;
+    top: -0.25em;
+    bottom: 0;
+    left: -0.25em;
+    right: -0.25em;
+    background: rgba(255, 255, 255, 0.2);
+z-index: -1;
+    border-radius: 60px;
 }
 
 #chart {
@@ -83,30 +149,34 @@ table {
     font-family: inconsolata, Monaco, lucida console, Consolas, courier new;
     font-size: 13px;
     text-transform: uppercase;
-    margin: 15px 0 20px 25px
+    margin: 1em 0;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 #speed .togglebutton {
-    padding: 3px;
+    padding: 0.5em 0 ;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(255,255,255,0.2);
     cursor: pointer;
-    float: left;
-    width: 60px
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: rgba(255,255,255,0);
 }
 
-#speed .togglebutton.slow {
-    border-right: none
-}
+/*#speed .togglebutton.slow {*/
+/*    border-right: none*/
+/*}*/
 
-#speed .togglebutton.fast {
-    border-left: none
-}
+/*#speed .togglebutton.fast {*/
+/*    border-left: none*/
+/*}*/
 
 #speed .togglebutton.current {
-    color: #fff;
-    background: #000;
-    border: 1px solid #000
+    transition: 1s ease;
+    background: rgba(255,255,255,0.1);
 }
 
 #note {
@@ -151,6 +221,98 @@ a:hover {
     clear: both
 }
 
+.actlabel{
+    font-size: 1.5em;
+    font-weight: 600
+}
+
 .actlabel, .actlabel1{
     fill: var(--color);
+    z-index: 99 !important;
+}
+
+.chart-filters > div{
+    margin-bottom: 3em;
+}
+
+.chart-filters > div:last-of-type{
+    margin-bottom: 0;
+}
+
+.chart-filters label{
+    opacity: 0.7
+}
+
+.chart-filters > div:nth-child(2) > div, .chart-filters > div:nth-child(3) > div{
+    display: flex;
+    font-size: 1em;
+    padding-top: 0.5em;
+}
+.chart-filters > div:nth-child(2) > div > div, .chart-filters > div:nth-child(3) > div > div{
+    display: flex;
+    align-items: center;
+    margin-left: 3.25em;
+    cursor: pointer
+}
+
+.chart-filters > div:nth-child(3) > div > div{
+    display: flex;
+    align-items: center;
+    margin-left: 1.25em;
+}
+.chart-filters .icon{
+    height: 2.5em;
+    width: 2.5em;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5em;
+    transition: 0.4s ease;
+}
+
+.chart-filters .icon svg, .chart-filters .icon path{
+    fill: rgba(255,255,255, 0.5);
+    transition: 0.4s ease;
+}
+
+.chart-filters #male.selected .icon{
+    background: rgba(var(--male), 0.1);
+}
+
+.chart-filters #male.selected .icon path{
+    fill: rgba(var(--male), 1);
+}
+
+.chart-filters #female.selected .icon{
+    background: rgba(var(--female), 0.1);
+}
+
+.chart-filters #female.selected .icon path{
+    fill: rgba(var(--female), 1);
+}
+
+.chart-filters #saudi.selected .icon{
+    background: rgba(var(--saudi), 0.1);
+}
+
+.chart-filters #saudi.selected .icon path{
+    fill: rgba(var(--saudi), 1);
+}
+
+.chart-filters #non-saudi.selected .icon{
+    background: rgba(var(--non-saudi), 0.1);
+}
+
+.chart-filters #non-saudi.selected .icon path, .chart-filters #non-saudi.selected .icon path{
+    fill: rgba(var(--non-saudi), 1);
+}
+
+.chart-filters .icon svg{
+    fill: rgba(255,255,255,0.5);
+}
+
+.field{
+    padding-top: 1em;
 }

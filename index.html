@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <head>
-    <title>Time Use Simulation</title>
+    <title>TimeUse Simulation</title>
     <link rel="stylesheet" href="./style.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="./fonts.css"/>
-    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
 </head>
 <meta charset="utf-8">
 <style>
@@ -17,21 +15,132 @@
 <div id="main-wrapper">
     <div id="sidebar">
         <div id="current_time">4:00am</div>
-        <div id="speed">
-            <div class="togglebutton fast" data-val="fast">سريع</div>
-            <div class="togglebutton medium" data-val="medium">متوسط السرعة</div>
-            <div class="togglebutton slow current" data-val="slow">بطي</div>
-            <div class="clr"></div>
+        <div class="chart-filters">
+            <div>
+                <label>السرعة</label>
+                <div id="speed">
+                    <div class="togglebutton fast" data-val="fast">سريع</div>
+                    <div class="togglebutton medium" data-val="medium">متوسط</div>
+                    <div class="togglebutton slow current" data-val="slow">بطي</div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+            <div id="gender">
+                <label>الجنس</label>
+                <div>
+                    <div id="male" class="selected" onclick="changeFilter('male')">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24"
+                                 enable-background="new 0 0 24 24" xml:space="preserve"><g id="Frame_-_24px"><rect fill="none" width="24" height="24"></rect></g>
+                                <g
+                                        id="Filled_Icons"><path  d="M13.001,3v2h4.586l-5.115,5.115C11.491,9.416,10.295,9,9.001,9c-3.309,0-6,2.691-6,6s2.691,6,6,6   s6-2.691,6-6c0-1.294-0.416-2.49-1.115-3.471l5.115-5.115V11h2V3H13.001z M9.001,19c-2.206,0-4-1.794-4-4c0-2.205,1.794-4,4-4   c2.205,0,4,1.795,4,4C13.001,17.206,11.207,19,9.001,19z"></path></g></svg>
+                        </div>
+                        <div><span>ذكر</span></div>
+                    </div>
+                    <div id="female" onclick="changeFilter('female')">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24"
+                                 enable-background="new 0 0 24 24" xml:space="preserve"><g id="Frame_-_24px"><rect y="-0.001" fill="none" width="24" height="24"></rect></g>
+                                <g
+                                        id="Filled_Icons"><path  d="M18.001,7.999c0-3.309-2.691-6-6-6s-6,2.691-6,6c0,2.967,2.167,5.432,5,5.91V17h-3v2h3v3h2v-3h3v-2h-3   v-3.09C15.834,13.431,18.001,10.966,18.001,7.999z M8.001,7.999c0-2.205,1.794-4,4-4c2.205,0,4,1.795,4,4c0,2.206-1.794,4-4,4   C9.795,12,8.001,10.206,8.001,7.999z"></path></g></svg>
+                        </div>
+                        <div><span>انثى</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id="nationality">
+                <label>الجنسية</label>
+                <div>
+                    <div id="saudi" class="selected" onclick="changeFilter('saudi')">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 version="1.1" id="Capa_1" x="0px" y="0px" width="21.933px" height="21.933px"
+                                 viewBox="0 0 21.933 21.933" style="enable-background:new 0 0 21.933 21.933;"
+                                 xml:space="preserve"><g><path d="M20.419,12.449c-2.364-0.223-3.284-1.899-4.129-3.772c-0.625-1.39-2.137-3.394-3.885-3.321   C10.859,5.42,9.789,4.73,8.727,3.821C6.886,2.245,4.955,1.098,2.499,2.706c0.781,1.082,0.111,2.322-1.4,2.476   c-0.43,0.043-0.881-0.27-1.013,0.479C-0.01,6.194-0.166,6.579,0.522,6.856c0.316,0.13,0.534,0.608,0.705,0.969   c1.053,2.222,3.338,3.78,3.48,6.51c0.016,0.325,0.419,0.762,0.75,0.915c0.734,0.338,0.958,0.998,1.327,1.604   c0.545,0.895,1.185,1.733,2.167,3.148c-0.226-1.91,0.724-1.576,1.443-1.561c0.71,0.016,1.465,0,2.113,0.235   c0.557,0.205,0.857,0.16,1.124-0.311c0.604-1.073,1.668-1.373,2.737-1.419c1.523-0.064,2.876-0.653,4.279-1.103   c1.238-0.398,1.21-1.576,1.282-2.512C22.002,12.399,20.997,12.502,20.419,12.449z"></path></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g>
+                                <g></g></svg>
+                        </div>
+                        <div><span>سعودي</span></div>
+                    </div>
+                    <div id="non-saudi" onclick="changeFilter('non-saudi')">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24"
+                                 enable-background="new 0 0 24 24" xml:space="preserve"><g id="Frame_-_24px"><rect x="0.001" y="0.001" fill="none" width="24" height="24.001"></rect></g>
+                                <g
+                                        id="Filled_Icons"><g><path fill="none" d="M12,6.5c-0.156,0-0.49,0.515-0.729,1.5h1.458C12.49,7.015,12.156,6.5,12,6.5z"></path><path
+                                        fill="none"
+                                        d="M11.271,13c0.239,0.986,0.573,1.5,0.729,1.5c0.156,0,0.49-0.514,0.729-1.5H11.271z"></path><path
+                                        fill="none"
+                                        d="M11.095,12h1.811c0.126-1.008,0.126-1.99,0-3h-1.811C10.968,10.008,10.968,10.991,11.095,12z"></path><path
+                                        d="M13.758,8h1.339c-0.447-0.554-1.031-0.985-1.71-1.237C13.54,7.123,13.663,7.546,13.758,8z"></path><path
+                                        fill="none"
+                                        d="M10.084,12c-0.108-0.967-0.115-1.974,0-3H8.298c-0.398,0.977-0.398,2.024,0,3H10.084z"></path><path
+                                        fill="none"
+                                        d="M10.242,8c0.095-0.454,0.217-0.877,0.371-1.237C9.935,7.015,9.351,7.446,8.903,8H10.242z"></path><path
+                                        fill="none"
+                                        d="M12,2c-4.418,0-8,3.582-8,8c0,4.418,8,12,8,12s8-7.582,8-12C20,5.582,16.418,2,12,2z M12,15.5    c-2.757,0-5-2.243-5-5s2.243-5,5-5s5,2.243,5,5S14.757,15.5,12,15.5z"></path><path
+                                        fill="none"
+                                        d="M10.242,13H8.903c0.448,0.554,1.032,0.985,1.711,1.238C10.46,13.877,10.337,13.455,10.242,13z"></path><path
+                                        fill="none"
+                                        d="M13.916,9c0.108,0.967,0.115,1.975,0,3h1.786c0.398-0.976,0.398-2.023,0-3H13.916z"></path><path
+                                        fill="none"
+                                        d="M13.758,13c-0.095,0.455-0.217,0.877-0.371,1.238c0.679-0.253,1.263-0.684,1.71-1.238H13.758z"></path></g></g></svg>
+                        </div>
+                        <div><span>غير سعودي</span></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label>الفئة العمرية</label>
+                <div class="field">
+                    <div class="inputslider" data-value="40" data-unit="%" data-values="20,25,30,35,40,45,50">
+                        <input type="text" name="input" autocomplete="off" readonly>
+                        <div class="values"></div>
+                        <div class="area">
+                            <div class="track"></div>
+                            <div class="fill"></div>
+                            <div class="knob"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div id="note"></div>
+        <!--        <div id="note"></div>-->
     </div>
     <div id="chart"></div>
     <div class="clr"></div>
 </div>
 <script src="./d3-3-5-5.min.js"></script>
+<script src="./Draggable.min.js"></script>
+<script src="./gsap.min.js"></script>
+<script src="./slider.js"></script>
 <script>
-    var THEME = "black";
-    document.body.className = "black"
+    var searchParams = new URLSearchParams(window.location.search);
+    var THEME = searchParams.get("theme") ? searchParams.get("theme") : "blue";
+    document.body.className = THEME
+    let filtersValues = [
+        "male",
+        "saudi",
+        40
+    ]
+    document.body.className = THEME
     fetch("./themes.json").then(response => response.json())
         .then(data => {
             THEME = data[THEME]
@@ -66,19 +175,74 @@
 
     var notes_index = 0;
 
-setTimeout(resetData, 100000)
+
     function resetData() {
         clearInterval(TIME)
-        timer()
-        USER_SPEED = "slow";
+        // USER_SPEED = "slow";
+        svg.selectAll("circle")
+            .remove();
+        svg.selectAll(".actlabel1").selectAll("tspan")
+            .text(function (d) {
+                return "0%";
+            });
         sched_objs = [],
-            curr_minute = 0;
-        d3.tsv("./data/Alien_Female_20_form.tsv", function (error, data) {
+            act_counts = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0};
+        curr_minute = 0;
+        d3.tsv(`./data/${filtersValues[1] === "saudi" ? "Saudi" : "Alien"}_${filtersValues[0] === "male" ? "Male" : "Female"}_${ filtersValues[2]}_form.tsv`, function (error, data) {
+            data.forEach(function (d) {
+                var day_array = d.day.split(",");
+                var activities = [];
+                for (var i = 0; i < day_array.length; i++) {
+                    // Duration
+                    if (i % 2 == 1) {
+                        if (day_array[i - 1] < 9) {
+                            activities.push({'act': day_array[i - 1], 'duration': +day_array[i]});
+                        }
+                    }
+                }
+                sched_objs.push(activities);
+            });
 
-            svg.selectAll("circle")
-                .remove();
+            nodes = sched_objs.map(function (o, i) {
+
+                var act = o[0].act;
+                act_counts[act] += 1;
+                var init_x = foci[act].x + Math.random();
+                var init_y = foci[act].y + Math.random();
+                return {
+                    act: act,
+                    radius: 4,
+                    x: init_x,
+                    y: init_y,
+                    color: color(act),
+                    moves: 0,
+                    next_move_time: o[0].duration,
+                    sched: o,
+                }
+            });
+
+            force = d3.layout.force()
+                .nodes(nodes)
+                .size([width, height])
+                // .links([])
+                .gravity(0)
+                .charge(0)
+                .friction(.9)
+                .on("tick", tick)
+                .start();
+
+            circle = svg.selectAll("circle")
+                .data(nodes)
+                .enter().insert("circle", "text")
+                .attr("r", function (d) {
+                    return d.radius;
+                })
+                .style("fill", function (d) {
+                    return d.color;
+                });
             // .call(force.drag);
-
+            curr_minute -= 60;
+            timer()
         });
     }
 
@@ -108,7 +272,7 @@ setTimeout(resetData, 100000)
 
 
     // Load data and let's do it.
-    d3.tsv("./data/Alien_Male_40_form.tsv", function (error, data) {
+    d3.tsv(`./data/${filtersValues[1] === "saudi" ? "Saudi" : "Alien"}_${filtersValues[0] === "male" ? "Male" : "Female"}_${ filtersValues[2]}_form.tsv`, function (error, data) {
 
         data.forEach(function (d) {
             var day_array = d.day.split(",");
@@ -146,7 +310,7 @@ setTimeout(resetData, 100000)
             }
         });
 
-         force = d3.layout.force()
+        force = d3.layout.force()
             .nodes(nodes)
             .size([width, height])
             // .links([])
@@ -156,7 +320,7 @@ setTimeout(resetData, 100000)
             .on("tick", tick)
             .start();
 
-         circle = svg.selectAll("circle")
+        circle = svg.selectAll("circle")
             .data(nodes)
             .enter().append("circle")
             .attr("r", function (d) {
@@ -228,176 +392,178 @@ setTimeout(resetData, 100000)
                 return d.short;
             });
         label1.append("tspan")
-        	.attr("dy", "1.3em")
+            .attr("dy", "1.3em")
             .attr("direction", "rtl")
-        	.attr("x", function() { return d3.select(this.parentNode).attr("x"); })
-        	.attr("text-anchor", "middle")
-        	.attr("class", "actpct1")
-        	.text(function(d) {
-        		return readablePercent(act_counts[d.index]);
-        	});
+            .attr("x", function () {
+                return d3.select(this.parentNode).attr("x");
+            })
+            .attr("text-anchor", "middle")
+            .attr("class", "actpct1")
+            .text(function (d) {
+                return readablePercent(act_counts[d.index]);
+            });
 
 
     }); // @end d3.tsv
         // Update nodes based on activity and duration
-        function timer() {
-            d3.range(nodes.length).map(function (i) {
-                var curr_node = nodes[i],
-                    curr_moves = curr_node.moves;
+    function timer() {
+        d3.range(nodes.length).map(function (i) {
+            var curr_node = nodes[i],
+                curr_moves = curr_node.moves;
 
-                // Time to go to next activity
-                if (curr_node.next_move_time == curr_minute) {
-                    if (curr_node.moves == curr_node.sched.length - 1) {
-                        curr_moves = 0;
-                    } else {
-                        curr_moves += 1;
-                    }
-
-                    // Subtract from current activity count
-                    act_counts[curr_node.act] -= 1;
-
-                    // Move on to next activity
-                    curr_node.act = curr_node.sched[curr_moves].act;
-
-                    // Add to new activity count
-                    act_counts[curr_node.act] += 1;
-
-                    curr_node.moves = curr_moves;
-                    curr_node.cx = foci[curr_node.act].x;
-                    curr_node.cy = foci[curr_node.act].y;
-
-                    nodes[i].next_move_time += nodes[i].sched[curr_node.moves].duration;
+            // Time to go to next activity
+            if (curr_node.next_move_time == curr_minute) {
+                if (curr_node.moves == curr_node.sched.length - 1) {
+                    curr_moves = 0;
+                } else {
+                    curr_moves += 1;
                 }
 
+                // Subtract from current activity count
+                act_counts[curr_node.act] -= 1;
+
+                // Move on to next activity
+                curr_node.act = curr_node.sched[curr_moves].act;
+
+                // Add to new activity count
+                act_counts[curr_node.act] += 1;
+
+                curr_node.moves = curr_moves;
+                curr_node.cx = foci[curr_node.act].x;
+                curr_node.cy = foci[curr_node.act].y;
+
+                nodes[i].next_move_time += nodes[i].sched[curr_node.moves].duration;
+            }
+
+        });
+
+        force.resume();
+        curr_minute += 60;
+
+        // Update percentages
+        label1.selectAll("tspan.actpct1")
+            .text(function (d) {
+                return readablePercent(act_counts[d.index]);
             });
 
-            force.resume();
-            curr_minute += 60;
+        // Update time
+        var true_minute = curr_minute % 1440;
+        d3.select("#current_time").text(minutesToTime(true_minute));
 
-            // Update percentages
-            label1.selectAll("tspan.actpct1")
-                .text(function (d) {
-                    return readablePercent(act_counts[d.index]);
-                });
+        // Update notes
+        // var true_minute = curr_minute % 1440;
+        // if (true_minute == time_notes[notes_index].start_minute) {
+        //     d3.select("#note")
+        //         .style("top", "0px")
+        //         .transition()
+        //         .duration(600)
+        //         .style("top", "20px")
+        //         .style("color", "#000000")
+        //         .text(time_notes[notes_index].note);
+        // }
 
-            // Update time
-            var true_minute = curr_minute % 1440;
-            d3.select("#current_time").text(minutesToTime(true_minute));
-
-            // Update notes
-            // var true_minute = curr_minute % 1440;
-            // if (true_minute == time_notes[notes_index].start_minute) {
-            //     d3.select("#note")
-            //         .style("top", "0px")
-            //         .transition()
-            //         .duration(600)
-            //         .style("top", "20px")
-            //         .style("color", "#000000")
-            //         .text(time_notes[notes_index].note);
-            // }
-
-            // Make note disappear at the end.
-            // else if (true_minute == time_notes[notes_index].stop_minute) {
-            //
-            //     d3.select("#note").transition()
-            //         .duration(1000)
-            //         .style("top", "300px")
-            //         .style("color", "#ffffff");
-            //
-            //     notes_index += 1;
-            //     if (notes_index == time_notes.length) {
-            //         notes_index = 0;
-            //     }
-            // }
-            //
-
-            TIME = setTimeout(timer, speeds[USER_SPEED]);
-        }
+        // Make note disappear at the end.
+        // else if (true_minute == time_notes[notes_index].stop_minute) {
+        //
+        //     d3.select("#note").transition()
+        //         .duration(1000)
+        //         .style("top", "300px")
+        //         .style("color", "#ffffff");
+        //
+        //     notes_index += 1;
+        //     if (notes_index == time_notes.length) {
+        //         notes_index = 0;
+        //     }
+        // }
+        //
 
         TIME = setTimeout(timer, speeds[USER_SPEED]);
+    }
+
+    TIME = setTimeout(timer, speeds[USER_SPEED]);
 
 
-        function tick(e) {
-            // console.log(e)
-            var k = 0.04 * e.alpha;
+    function tick(e) {
+        // console.log(e)
+        var k = 0.04 * e.alpha;
 
-            // Push nodes toward their designated focus.
-            nodes.forEach(function (o, i) {
-                var curr_act = o.act;
+        // Push nodes toward their designated focus.
+        nodes.forEach(function (o, i) {
+            var curr_act = o.act;
 
-                // Make sleep more sluggish moving.
-                if (curr_act == "0") {
-                    var damper = 0.6;
-                } else {
-                    var damper = 1;
-                }
-                o.color = color(curr_act);
-                o.y += (foci[curr_act].y - o.y) * k * damper;
-                o.x += (foci[curr_act].x - o.x) * k * damper;
+            // Make sleep more sluggish moving.
+            if (curr_act == "0") {
+                var damper = 0.6;
+            } else {
+                var damper = 1;
+            }
+            o.color = color(curr_act);
+            o.y += (foci[curr_act].y - o.y) * k * damper;
+            o.x += (foci[curr_act].x - o.x) * k * damper;
+        });
+
+        circle
+            .each(collide(.5))
+            .style("fill", function (d) {
+                return d.color;
+            })
+            .attr("cx", function (d) {
+                return d.x;
+            })
+            .attr("cy", function (d) {
+                return d.y;
             });
-
-            circle
-                .each(collide(.5))
-                .style("fill", function (d) {
-                    return d.color;
-                })
-                .attr("cx", function (d) {
-                    return d.x;
-                })
-                .attr("cy", function (d) {
-                    return d.y;
-                });
-        }
+    }
 
 
-        // Resolve collisions between nodes.
-        function collide(alpha) {
-            var quadtree = d3.geom.quadtree(nodes);
-            return function (d) {
-                var r = d.radius + maxRadius + padding,
-                    nx1 = d.x - r,
-                    nx2 = d.x + r,
-                    ny1 = d.y - r,
-                    ny2 = d.y + r;
-                quadtree.visit(function (quad, x1, y1, x2, y2) {
-                    if (quad.point && (quad.point !== d)) {
-                        var x = d.x - quad.point.x,
-                            y = d.y - quad.point.y,
-                            l = Math.sqrt(x * x + y * y),
-                            r = d.radius + quad.point.radius + (d.act !== quad.point.act) * padding;
-                        if (l < r) {
-                            l = (l - r) / l * alpha;
-                            d.x -= x *= l;
-                            d.y -= y *= l;
-                            quad.point.x += x;
-                            quad.point.y += y;
-                        }
+    // Resolve collisions between nodes.
+    function collide(alpha) {
+        var quadtree = d3.geom.quadtree(nodes);
+        return function (d) {
+            var r = d.radius + maxRadius + padding,
+                nx1 = d.x - r,
+                nx2 = d.x + r,
+                ny1 = d.y - r,
+                ny2 = d.y + r;
+            quadtree.visit(function (quad, x1, y1, x2, y2) {
+                if (quad.point && (quad.point !== d)) {
+                    var x = d.x - quad.point.x,
+                        y = d.y - quad.point.y,
+                        l = Math.sqrt(x * x + y * y),
+                        r = d.radius + quad.point.radius + (d.act !== quad.point.act) * padding;
+                    if (l < r) {
+                        l = (l - r) / l * alpha;
+                        d.x -= x *= l;
+                        d.y -= y *= l;
+                        quad.point.x += x;
+                        quad.point.y += y;
                     }
-                    return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-                });
-            };
-        }
-
-
-        // Speed toggle
-        d3.selectAll(".togglebutton")
-            .on("click", function () {
-                if (d3.select(this).attr("data-val") == "slow") {
-                    d3.select(".slow").classed("current", true);
-                    d3.select(".medium").classed("current", false);
-                    d3.select(".fast").classed("current", false);
-                } else if (d3.select(this).attr("data-val") == "medium") {
-                    d3.select(".slow").classed("current", false);
-                    d3.select(".medium").classed("current", true);
-                    d3.select(".fast").classed("current", false);
-                } else {
-                    d3.select(".slow").classed("current", false);
-                    d3.select(".medium").classed("current", false);
-                    d3.select(".fast").classed("current", true);
                 }
-
-                USER_SPEED = d3.select(this).attr("data-val");
+                return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
             });
+        };
+    }
+
+
+    // Speed toggle
+    d3.selectAll(".togglebutton")
+        .on("click", function () {
+            if (d3.select(this).attr("data-val") == "slow") {
+                d3.select(".slow").classed("current", true);
+                d3.select(".medium").classed("current", false);
+                d3.select(".fast").classed("current", false);
+            } else if (d3.select(this).attr("data-val") == "medium") {
+                d3.select(".slow").classed("current", false);
+                d3.select(".medium").classed("current", true);
+                d3.select(".fast").classed("current", false);
+            } else {
+                d3.select(".slow").classed("current", false);
+                d3.select(".medium").classed("current", false);
+                d3.select(".fast").classed("current", true);
+            }
+
+            USER_SPEED = d3.select(this).attr("data-val");
+        });
 
 
     function color(activity) {
@@ -466,4 +632,42 @@ setTimeout(resetData, 100000)
     }
 
 
+</script>
+<script>
+    function changeFilter(id) {
+        let index;
+        if (id === "male" || id === "female") {
+            let clickedEle = document.getElementById(id)
+            if (clickedEle.classList.contains("selected")) {
+                return
+            } else {
+                clickedEle.classList.add("selected");
+                index = 0
+                let male = document.getElementById("male")
+                let female = document.getElementById("female")
+                if (id === "male") {
+                    female.classList.remove("selected");
+                } else {
+                    male.classList.remove("selected");
+                }
+            }
+        } else {
+            let clickedEle = document.getElementById(id)
+            if (clickedEle.classList.contains("selected")) {
+                return
+            } else {
+                clickedEle.classList.add("selected");
+                index = 1
+                let saudi = document.getElementById("saudi")
+                let nonSaudi = document.getElementById("non-saudi")
+                if (id === "saudi") {
+                    nonSaudi.classList.remove("selected");
+                } else {
+                    saudi.classList.remove("selected");
+                }
+            }
+        }
+        filtersValues[index] = id
+        resetData()
+    }
 </script>
